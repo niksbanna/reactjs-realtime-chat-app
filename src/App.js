@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React, { Suspense } from 'react';
+import Chat from './pages/Chat';
+const Login = React.lazy(() => import('./pages/Login'));
+const Register = React.lazy(() => import('./pages/Register'));
+const SetAvatar = React.lazy(() => import('./pages/SetAvatar'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/register' element={
+          <Suspense fallback={<div> Redirecting to register page... </div>} >
+            <Register /></Suspense>
+        } />
+        <Route path='/login' element={
+          <Suspense fallback={<div> Redirecting to login page... </div>} >
+            <Login /></Suspense>
+        } />
+        <Route path='/setAvatar' element={
+          <Suspense fallback={<div> Redirecting to avatar selection page... </div>} >
+            <SetAvatar /></Suspense>
+        } />
+        <Route path='/' element={<Chat />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
